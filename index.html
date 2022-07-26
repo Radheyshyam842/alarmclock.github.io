@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALARM CLOCK</title>
+  <link rel="icon" type="image/icon" href="icon1.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/6f260fee7a.js" crossorigin="anonymous"></script>
+  <style>
+    
+     
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  padding: 0;
+ 
+  --bg-prim: #12181b;
+  --bg-sec: #383838;
+  --clr: #ffffff;
+  box-sizing: border-box;
+  background-color: var(--bg-prim);
+}
+nav {
+  text-align: center;
+ 
+  color: var(--clr);
+  background-color: var(--bg-sec);
+}
+.container1 {
+ 
+  background-color: var(--bg-sec);
+  padding: 1rem;
+  color: var(--clr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  border-radius: 10px;
+}
+span{
+  font-size: 2.3rem;
+}
+.time {
+  text-align: center;
+  outline: none;
+  font-size: 1.5rem;
+  height: 3rem;
+  margin: 1rem;
+  width: 5rem;
+}
+.butt {
+  font-size: 2rem;
+  display: inline;
+  
+  outline: none;
+  border: 1px;
+  width: 5rem;
+ 
+  cursor: pointer;
+  color: #ffffff;
+  border-radius: 4px;
+  background-color: hsl(217,99%, 65%);
+}
+#btn2 {
+  visibility: hidden;
+  display:inline;
+}
+p{
+  font-size: 1.3rem;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container mx-auto mt-4 container1">
+    <nav>
+        <h1>ALARM CLOCK BY RADHEYSHYAM PUROHIT<i class="far fa-clock"></i></h1>
+    </nav>
+        <p class="text-center">Enter the time</p>
+        <div class="inputs">
+            <input type="number" id="txt" placeholder="" class="time" autocomplete="off">
+            <span>:</span>
+            <input type="number" id="txt2" placeholder="" class="time" autocomplete="off">
+        </div>
+        <div class="btns">
+            <button id="btn" class="butt">SET</button>
+           
+            <button id="btn2" class="butt">STOP</button>
+        </div>
+        <div class="info">
+            <p id="para"></p>
+        </div>
+        </div>
+        
+       <script>    let para = document.getElementById('para');  
+        let text = document.getElementById('txt');  
+        let text2 = document.getElementById('txt2');  
+        let btn = document.getElementById('btn');  
+        let btn2 = document.getElementById('btn2');  
+        window.addEventListener('load', () => {  
+         text.placeholder = new Date().getHours();  
+         text2.placeholder = new Date().getMinutes();  
+        });  
+        btn.addEventListener('click', alarm);  
+        let x;  
+        function alarm() {  
+         if (text.value && text2.value) {  
+          x = setInterval(() => {  
+           setAlarm();  
+          }, 1000);  
+         } else {  
+          alert('ENTER THE HRS AND MINS!');  
+         }  
+        }  
+        function setAlarm() {  
+         let d = new Date().toLocaleDateString();  
+         let then = new Date(`${d} ${text.value}:${text2.value}`).getTime();  
+         // text.value = text.value % 12 || 12;  
+         let now = new Date().getTime();  
+         let distance = then - now;  
+         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  
+         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));  
+         var seconds = Math.floor((distance % (1000 * 60)) / 1000);  
+         para.innerHTML = `ALARM IN - ${hours}:${minutes}:${seconds}`;  
+         if (distance < 0) {  
+          clearInterval(x);  
+          para.innerHTML = `IT'S ALARM TIME!`;  
+          let audio = new Audio('alarm.wav');  
+          audio.play();  
+          btn2.style.visibility = 'visible';  
+          btn2.addEventListener('click', () => {  
+           para.innerHTML = ``;  
+           audio.pause();  
+           btn2.style.visibility = 'hidden';  
+           text.value = '';  
+           text2.value = '';  
+          });  
+         }  
+        }  </script>
+    
+</body>
+</html>
